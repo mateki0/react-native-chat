@@ -1,11 +1,10 @@
-import { createHttpLink, split, ApolloClient, InMemoryCache, ApolloLink } from '@apollo/client';
-import { getMainDefinition } from '@apollo/client/utilities';
+import { createHttpLink, split, ApolloClient, InMemoryCache } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
+import { TOKEN } from '@env';
 import * as AbsintheSocket from '@absinthe/socket';
 import { createAbsintheSocketLink } from '@absinthe/socket-apollo-link';
-import { Socket as PhoenixSocket } from 'phoenix';
-
-import TOKEN from '@env';
+import { hasSubscription } from '@jumpn/utils-graphql';
+import PhoenixSocket from './socket';
 
 const initApollo = () => {
   const httpLink = createHttpLink({
@@ -16,7 +15,7 @@ const initApollo = () => {
 
   const phoenixSocket = new PhoenixSocket(wssUri, {
     params: () => {
-      return { token: `Bearer ${TOKEN}` };
+      return { token: TOKEN };
     },
   });
 
@@ -28,27 +27,20 @@ const initApollo = () => {
     return {
       headers: {
         ...headers,
-        authorization: `Bearer ${TOKEN}`,
+        Authorization: `Bearer ${TOKEN}`,
       },
     };
   });
 
-  const concatedAuthLink = authLink.concat(httpLink);
+  const authedHttpLink = authLink.concat(httpLink);
 
-  const splitLink = split(
-    ({ query }) => {
-      const definition = getMainDefinition(query);
-      return definition.kind === 'OperationDefinition' && definition.operation === 'subscription';
-    },
-    wsLink,
-    concatedAuthLink,
-  );
+  const link = split((operation) => hasSubscription(operation.query), wsLink, authedHttpLink);
 
   const cache = new InMemoryCache();
 
   return new ApolloClient({
+    link,
     cache,
-    link: splitLink,
   });
 };
 

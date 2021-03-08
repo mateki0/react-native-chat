@@ -1,4 +1,5 @@
 import * as React from 'react';
+
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import ButtonsWrapper from './styled/ButtonsWrapper';
@@ -9,6 +10,7 @@ import CircleButton from './styled/CircleButton';
 type HeaderProps = {
   isMainPage?: boolean;
 };
+
 const Header: React.FunctionComponent<HeaderProps> = ({ isMainPage }) => {
   console.log(isMainPage);
   return (
