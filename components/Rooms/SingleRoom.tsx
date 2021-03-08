@@ -30,7 +30,7 @@ const SingleRoom: React.FunctionComponent<SingleRoomProps> = ({ roomName, roomId
   return (
     <SingleRoomContainer
       onPress={() => {
-        navigation.navigate('Chat', { messages: data.room.messages, roomName });
+        navigation.navigate('Chat', { messages: data.room.messages, roomName, roomId });
       }}
     >
       {data.room.roomPic ? <RoomImage source={{ uri: data.room.roomPic }} /> : <BlankRoomImage />}
