@@ -1,11 +1,11 @@
 import * as React from 'react';
 
-import { Text } from 'react-native';
-import { FlatList } from 'react-native-gesture-handler';
+import { ActivityIndicator } from 'react-native';
 import { useQuery } from '@apollo/client';
 import { GET_ROOMS } from '../../src/utils/queries';
 import RoomsContainer from './styled/RoomsContainer';
 import SingleRoom from './SingleRoom';
+import RoomsList from './styled/RoomsList';
 
 export type RoomProps = {
   item: {
@@ -18,14 +18,14 @@ const Rooms: React.FunctionComponent = () => {
   const { data, loading } = useQuery(GET_ROOMS);
 
   if (loading) {
-    return <Text>Loading...</Text>;
+    return <ActivityIndicator />;
   }
 
-  const renderRoom = ({ item }: RoomProps) => <SingleRoom item={item} />;
+  const renderRoom = ({ item }: RoomProps) => <SingleRoom roomName={item.name} roomId={item.id} />;
 
   return (
     <RoomsContainer>
-      <FlatList data={data.usersRooms.rooms} renderItem={renderRoom} />
+      <RoomsList data={data.usersRooms.rooms} renderItem={renderRoom} />
     </RoomsContainer>
   );
 };
