@@ -7,7 +7,7 @@ import ScreenWrapper from './styled/ScreenWrapper';
 const Home: React.FunctionComponent = () => {
   return (
     <ScreenWrapper statusBarHeight={StatusBar.currentHeight}>
-      <Header isMainPage />
+      <Header />
       <Rooms />
     </ScreenWrapper>
   );

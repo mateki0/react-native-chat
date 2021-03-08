@@ -1,11 +1,19 @@
 import * as React from 'react';
-import Header from '../components/Header/Header';
+import { GiftedChat } from 'react-native-gifted-chat';
+import ChatHeader from '../components/Header/ChatHeader';
 import ScreenWrapper from './styled/ScreenWrapper';
 
-const Chat: React.FunctionComponent = () => {
+type ChatProps = {
+  route: any;
+};
+
+const Chat: React.FunctionComponent<ChatProps> = ({ route }) => {
+  const { messages, roomName } = route.params;
+
   return (
     <ScreenWrapper>
-      <Header />
+      <ChatHeader roomName={roomName} />
+      <GiftedChat />
     </ScreenWrapper>
   );
 };
