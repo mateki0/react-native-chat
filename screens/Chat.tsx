@@ -5,27 +5,22 @@ import { GiftedChat } from 'react-native-gifted-chat';
 import ChatHeader from '../components/Header/ChatHeader';
 import { SEND_MESSAGE } from '../src/utils/mutations';
 import ScreenWrapper from './styled/ScreenWrapper';
-import {
-  ChatProps,
-  ChatScreenRouteProp,
-  RoomDetails,
-  MessageProps,
-} from '../src/types/ChatScreenTypes';
+import { ChatScreenRouteProp, RoomDetails, MessageProps } from '../src/types/ChatScreenTypes';
 
-const Chat: React.FunctionComponent<ChatProps> = ({ route }: ChatScreenRouteProp) => {
+const Chat: React.FunctionComponent<ChatScreenRouteProp> = ({ route }) => {
   const [sendMessage] = useMutation(SEND_MESSAGE);
   const { roomName, roomId }: RoomDetails = route.params;
 
   const giftedChatMessagesFormat = route.params.messages.map(
-    ({ id, body, createdAt, user }: MessageProps) => {
+    ({ id, body, insertedAt, user }: MessageProps) => {
       const giftedMsg = {
         _id: id,
         text: body,
-        createdAt,
+        createdAt: insertedAt,
         user: {
           _id: user.id,
           name: user.firstName,
-          avatar: user.avatarUrl,
+          avatar: user.profilePic,
         },
       };
       return giftedMsg;
@@ -34,14 +29,14 @@ const Chat: React.FunctionComponent<ChatProps> = ({ route }: ChatScreenRouteProp
 
   const [messages, setMessages] = React.useState(giftedChatMessagesFormat);
 
-  const handleSend = React.useCallback(() => {
-    setMessages((previousMessages) => GiftedChat.append(previousMessages, messages));
+  const handleSend = React.useCallback((msgs = []) => {
+    setMessages((previousMessages) => GiftedChat.append(previousMessages, msgs));
 
-    const body = messages[0].text;
-
+    const body = msgs[0].text;
     sendMessage({
       variables: { body, roomId },
     });
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

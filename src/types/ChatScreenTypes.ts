@@ -8,10 +8,6 @@ export type RouteProps = {
 
 export type ChatScreenRouteProp = { route: RouteProp<{ params: RouteProps }, 'params'> };
 
-export type ChatProps = {
-  route: any;
-};
-
 export type RoomDetails = {
   roomName: string;
   roomId: string;
@@ -20,10 +16,10 @@ export type RoomDetails = {
 export type MessageProps = {
   id: string;
   body: string;
-  createdAt: string;
+  insertedAt: string;
   user: {
     id: string;
     firstName: string;
-    avatarUrl: string;
+    profilePic: string;
   };
 };

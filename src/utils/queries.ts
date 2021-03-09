@@ -22,6 +22,7 @@ export const GET_SINGLE_ROOM = gql`
         user {
           id
           firstName
+          profilePic
         }
       }
       name
