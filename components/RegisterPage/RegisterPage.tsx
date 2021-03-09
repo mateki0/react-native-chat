@@ -50,6 +50,7 @@ const RegisterPage: React.FunctionComponent = () => {
       variables: { email, firstName, lastName, password, passwordConfirmation },
     });
   };
+
   return (
     <FormWrapper statusBarHeight={StatusBar.currentHeight}>
       <FormHeading>Create new account</FormHeading>

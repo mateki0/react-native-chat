@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { StatusBar, Text, ActivityIndicator } from 'react-native';
+import { Text, ActivityIndicator } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import { useForm, Controller } from 'react-hook-form';
@@ -23,6 +23,7 @@ type FormData = {
 const LoginPage: React.FunctionComponent = () => {
   const { control, handleSubmit, register, errors } = useForm<FormData>();
   const { handleUserChange } = React.useContext(UserContext);
+  const [isLoading, setIsLoading] = React.useState(false);
 
   const EMAIL_REGEX = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
@@ -33,10 +34,12 @@ const LoginPage: React.FunctionComponent = () => {
       navigation.navigate('Home');
       await AsyncStorage.setItem('token', loginUser.token);
       handleUserChange({ id: loginUser.user.id });
+      setIsLoading(false);
     },
   });
 
   const handleLogin = ({ email, password }: FormData) => {
+    setIsLoading(true);
     loginUserMutation({
       variables: { email, password },
     });
@@ -46,6 +49,10 @@ const LoginPage: React.FunctionComponent = () => {
     register('email');
     register('password');
   }, [register]);
+
+  if (isLoading) {
+    return <ActivityIndicator animating size="large" color="#5b61b9" />;
+  }
 
   return (
     <FormWrapper>
