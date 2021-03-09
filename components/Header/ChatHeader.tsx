@@ -1,12 +1,12 @@
 import * as React from 'react';
 
 import { useNavigation } from '@react-navigation/native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import ButtonsWrapper from './styled/ButtonsWrapper';
 import HeaderContainer from './styled/HeaderContainer';
 import HeaderText from './styled/HeaderText';
 import CircleButton from './styled/CircleButton';
 import NavButtonsWrapper from './styled/NavButtonsWrapper';
-import HeaderButton from './styled/HeaderButton';
 import HeaderButtonText from './styled/HeaderButtonText';
 
 type ChatHeaderProps = {
@@ -18,12 +18,12 @@ const ChatHeader: React.FunctionComponent<ChatHeaderProps> = ({ roomName }) => {
   return (
     <HeaderContainer>
       <NavButtonsWrapper>
-        <HeaderButton onPress={() => navigation.goBack()}>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
           <HeaderButtonText>Back</HeaderButtonText>
-        </HeaderButton>
-        <HeaderButton>
+        </TouchableOpacity>
+        <TouchableOpacity>
           <HeaderButtonText>Search</HeaderButtonText>
-        </HeaderButton>
+        </TouchableOpacity>
       </NavButtonsWrapper>
       <HeaderText>{roomName}</HeaderText>
       <ButtonsWrapper>
