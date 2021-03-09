@@ -1,10 +1,15 @@
 import styled from 'styled-components/native';
 
-const CircleButton = styled.TouchableOpacity<{ backgroundColor?: string }>`
+const CircleButton = styled.TouchableOpacity<{
+  backgroundColor?: string;
+  customWidth: string;
+  customHeight: string;
+  customRadius: string;
+}>`
   background: ${(props) => props.backgroundColor};
-  width: 50px;
-  height: 50px;
-  border-radius: 25px;
+  width: ${(props) => props.customWidth};
+  height: ${(props) => props.customHeight};
+  border-radius: ${(props) => props.customRadius};
   align-items: center;
   justify-content: center;
 `;

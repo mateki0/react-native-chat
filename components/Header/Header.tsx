@@ -7,12 +7,7 @@ import HeaderContainer from './styled/HeaderContainer';
 import HeaderText from './styled/HeaderText';
 import CircleButton from './styled/CircleButton';
 
-type HeaderProps = {
-  isMainPage?: boolean;
-};
-
-const Header: React.FunctionComponent<HeaderProps> = ({ isMainPage }) => {
-  console.log(isMainPage);
+const Header: React.FunctionComponent = () => {
   return (
     <HeaderContainer>
       <HeaderText>
@@ -20,7 +15,12 @@ const Header: React.FunctionComponent<HeaderProps> = ({ isMainPage }) => {
         your friends
       </HeaderText>
       <ButtonsWrapper>
-        <CircleButton backgroundColor="#8589c9">
+        <CircleButton
+          backgroundColor="#8589c9"
+          customWidth="50px"
+          customHeight="50px"
+          customRadius="25px"
+        >
           <FontAwesomeIcon icon={faSearch} size={20} color="#e0e1f2" />
         </CircleButton>
       </ButtonsWrapper>
