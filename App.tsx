@@ -8,6 +8,7 @@ import Home from './screens/Home';
 import Chat from './screens/Chat';
 import Login from './screens/Login';
 import { UserProvider } from './src/contexts/UserContext';
+import Register from './screens/Register';
 
 const Stack = createStackNavigator();
 const client = initApollo();
@@ -26,6 +27,7 @@ const App: React.FunctionComponent = () => {
             <Stack.Screen name="Home" component={Home} />
             <Stack.Screen name="Chat" component={Chat} />
             <Stack.Screen name="Login" component={Login} />
+            <Stack.Screen name="Register" component={Register} />
           </Stack.Navigator>
         </NavigationContainer>
       </UserProvider>

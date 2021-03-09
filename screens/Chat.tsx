@@ -43,6 +43,7 @@ const Chat: React.FunctionComponent<ChatScreenRouteProp> = ({ route }) => {
   return (
     <ScreenWrapper>
       <ChatHeader roomName={roomName} />
+
       <GiftedChat
         messages={messages}
         onSend={handleSend}
