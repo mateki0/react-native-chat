@@ -5,6 +5,7 @@ const FormSubmitButton = styled.TouchableOpacity`
   background: #8589c9;
   align-items: center;
   margin-top: 20px;
+  border-radius: 10px;
 `;
 
 export default FormSubmitButton;

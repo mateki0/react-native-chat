@@ -1,5 +1,6 @@
 import { createHttpLink, split, ApolloClient, InMemoryCache } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { TOKEN } from '@env';
 import * as AbsintheSocket from '@absinthe/socket';
 import { createAbsintheSocketLink } from '@absinthe/socket-apollo-link';
@@ -14,8 +15,12 @@ const initApollo = () => {
   const wssUri = 'wss://chat.thewidlarzgroup.com/socket';
 
   const phoenixSocket = new PhoenixSocket(wssUri, {
-    params: () => {
-      return { token: TOKEN };
+    params: async () => {
+      const token = await AsyncStorage.getItem('token');
+      if (token) {
+        return { token };
+      }
+      return {};
     },
   });
 
@@ -23,11 +28,13 @@ const initApollo = () => {
 
   const wsLink = createAbsintheSocketLink(absintheSocket);
 
-  const authLink = setContext((_, { headers }) => {
+  const authLink = setContext(async (_, { headers }) => {
+    const token = await AsyncStorage.getItem('token');
+
     return {
       headers: {
         ...headers,
-        Authorization: `Bearer ${TOKEN}`,
+        Authorization: token ? `Bearer ${token}` : `Bearer ${TOKEN}`,
       },
     };
   });

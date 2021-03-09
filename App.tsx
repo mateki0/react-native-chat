@@ -7,6 +7,7 @@ import initApollo from './src/utils/initApollo';
 import Home from './screens/Home';
 import Chat from './screens/Chat';
 import Login from './screens/Login';
+import { UserProvider } from './src/contexts/UserContext';
 
 const Stack = createStackNavigator();
 const client = initApollo();
@@ -14,18 +15,20 @@ const client = initApollo();
 const App: React.FunctionComponent = () => {
   return (
     <ApolloProvider client={client}>
-      <NavigationContainer>
-        <Stack.Navigator
-          initialRouteName="Home"
-          screenOptions={{
-            headerShown: false,
-          }}
-        >
-          <Stack.Screen name="Home" component={Home} />
-          <Stack.Screen name="Chat" component={Chat} />
-          <Stack.Screen name="Login" component={Login} />
-        </Stack.Navigator>
-      </NavigationContainer>
+      <UserProvider>
+        <NavigationContainer>
+          <Stack.Navigator
+            initialRouteName="Home"
+            screenOptions={{
+              headerShown: false,
+            }}
+          >
+            <Stack.Screen name="Home" component={Home} />
+            <Stack.Screen name="Chat" component={Chat} />
+            <Stack.Screen name="Login" component={Login} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </UserProvider>
     </ApolloProvider>
   );
 };

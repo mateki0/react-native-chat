@@ -1,18 +1,40 @@
 import * as React from 'react';
 
+import { useApolloClient } from '@apollo/client';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faSearch, faSignInAlt, faUserPlus } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faSignOutAlt, faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import ButtonsWrapper from './styled/ButtonsWrapper';
 import HeaderContainer from './styled/HeaderContainer';
 import HeaderText from './styled/HeaderText';
 import CircleButton from './styled/CircleButton';
 import HeadingButtonsTextWrapper from './styled/HeadingButtonsTextWrapper';
 import LoginRegisterWrapper from './styled/LoginRegisterWrapper';
+import { UserContext } from '../../src/contexts/UserContext';
 
-const Header: React.FunctionComponent = () => {
+type HeaderProps = {
+  isLogged?: boolean;
+};
+const Header: React.FunctionComponent<HeaderProps> = ({ isLogged }) => {
+  const { handleUserChange } = React.useContext(UserContext);
   const navigation = useNavigation();
+  const client = useApolloClient();
 
+  const handleRemoveToken = async () => {
+    try {
+      await AsyncStorage.removeItem('token');
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleLogout = () => {
+    handleRemoveToken().then(() => {
+      client.resetStore();
+      handleUserChange({ id: '' });
+    });
+  };
   return (
     <HeaderContainer>
       <HeadingButtonsTextWrapper>
@@ -20,27 +42,32 @@ const Header: React.FunctionComponent = () => {
           Chat with{'\n'}
           your friends
         </HeaderText>
-        <LoginRegisterWrapper>
-          <CircleButton
-            onPress={() => navigation.navigate('Login')}
-            backgroundColor="#8589c9"
-            customWidth="40px"
-            customHeight="40px"
-            customRadius="20px"
-          >
-            <FontAwesomeIcon icon={faSignInAlt} size={20} color="#e0e1f2" />
-          </CircleButton>
-          <CircleButton
-            onPress={() => navigation.navigate('Register')}
-            backgroundColor="#8589c9"
-            customWidth="40px"
-            customHeight="40px"
-            customRadius="20px"
-            customMargin="15px"
-          >
-            <FontAwesomeIcon icon={faUserPlus} size={20} color="#e0e1f2" />
-          </CircleButton>
-        </LoginRegisterWrapper>
+        {!isLogged ? (
+          <LoginRegisterWrapper>
+            <CircleButton
+              onPress={() => navigation.navigate('Register')}
+              backgroundColor="#8589c9"
+              customWidth="40px"
+              customHeight="40px"
+              customRadius="20px"
+              customMargin="15px"
+            >
+              <FontAwesomeIcon icon={faUserPlus} size={20} color="#e0e1f2" />
+            </CircleButton>
+          </LoginRegisterWrapper>
+        ) : (
+          <LoginRegisterWrapper>
+            <CircleButton
+              onPress={handleLogout}
+              backgroundColor="#8589c9"
+              customWidth="40px"
+              customHeight="40px"
+              customRadius="20px"
+            >
+              <FontAwesomeIcon icon={faSignOutAlt} size={20} color="#e0e1f2" />
+            </CircleButton>
+          </LoginRegisterWrapper>
+        )}
       </HeadingButtonsTextWrapper>
       <ButtonsWrapper>
         <CircleButton

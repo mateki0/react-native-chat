@@ -13,6 +13,7 @@ import LoginWrapper from './styled/LoginWrapper';
 import LoginHeading from './styled/LoginHeading';
 
 import { LOGIN_USER } from '../../src/utils/mutations';
+import { UserContext } from '../../src/contexts/UserContext';
 
 type FormData = {
   email: string;
@@ -21,20 +22,23 @@ type FormData = {
 
 const LoginPage: React.FunctionComponent = () => {
   const { control, handleSubmit, errors } = useForm<FormData>();
+  const { handleUserChange } = React.useContext(UserContext);
+
+  const EMAIL_REGEX = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
   const navigation = useNavigation();
 
-  const [loginUser] = useMutation(LOGIN_USER, {
-    onCompleted: ({ token }) => {
+  const [loginUserMutation] = useMutation(LOGIN_USER, {
+    onCompleted: async ({ loginUser }) => {
       navigation.navigate('Home');
-      AsyncStorage.setItem('token', token);
+      await AsyncStorage.setItem('token', loginUser.token);
+      handleUserChange({ id: loginUser.user.id });
     },
   });
-  const EMAIL_REGEX = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
   const handleLogin = (data: { email: string; password: string }) => {
     const { email, password } = data;
-    loginUser({
+    loginUserMutation({
       variables: { email, password },
     });
   };
