@@ -9,10 +9,13 @@ import { UserContext } from '../src/contexts/UserContext';
 const Home: React.FunctionComponent = () => {
   const { user } = React.useContext(UserContext);
 
+  const isLogged =
+    user && Object.keys(user).length !== 0 && user.constructor === Object && user.id !== '';
+
   return (
     <ScreenWrapper>
-      <Header isLogged={user && user.id !== ''} />
-      {user && user.id !== '' ? <Rooms /> : <LoginPage />}
+      <Header isLogged={isLogged} />
+      {isLogged ? <Rooms /> : <LoginPage />}
     </ScreenWrapper>
   );
 };

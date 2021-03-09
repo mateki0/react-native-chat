@@ -48,6 +48,7 @@ const Chat: React.FunctionComponent<ChatScreenRouteProp> = ({ route }) => {
         onSend={handleSend}
         user={{ _id: 999 }}
         placeholder="Type a message..."
+        alwaysShowSend
       />
     </ScreenWrapper>
   );

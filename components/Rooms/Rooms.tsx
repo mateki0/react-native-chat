@@ -18,7 +18,7 @@ const Rooms: React.FunctionComponent = () => {
   const { data, loading } = useQuery(GET_ROOMS);
 
   if (loading) {
-    return <ActivityIndicator />;
+    return <ActivityIndicator animating size="large" color="#5b61b9" />;
   }
 
   const renderRoom = ({ item }: RoomProps) => <SingleRoom roomName={item.name} roomId={item.id} />;
