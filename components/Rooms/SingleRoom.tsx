@@ -1,6 +1,7 @@
-import { useQuery } from '@apollo/client';
 import * as React from 'react';
-import { ActivityIndicator } from 'react-native';
+
+import { useQuery } from '@apollo/client';
+import { ActivityIndicator, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import moment from 'moment';
 import RoomName from './styled/RoomName';
@@ -8,7 +9,6 @@ import SingleRoomContainer from './styled/SingleRoomContainer';
 import { GET_SINGLE_ROOM } from '../../src/utils/queries';
 import RoomImage from './styled/RoomImage';
 import BlankRoomImage from './styled/BlankRoomImage';
-import RoomInnerWrapper from './styled/RoomInnerWrapper';
 import RoomNameHourWrapper from './styled/RoomNameHourWrapper';
 import LastMessageText from './styled/LastMessageText';
 import TextBy from './styled/TextBy';
@@ -31,11 +31,11 @@ const SingleRoom: React.FunctionComponent<SingleRoomProps> = ({ roomName, roomId
         variables: { roomId },
         updateQuery: (prev, { subscriptionData }) => {
           if (!subscriptionData.data) return prev;
-          const newFeedItem = subscriptionData.data.messageAdded;
+          const newMessage = subscriptionData.data.messageAdded;
           return {
             ...prev,
             room: {
-              messages: [newFeedItem, ...prev.room.messages],
+              messages: [newMessage, ...prev.room.messages],
             },
           };
         },
@@ -69,7 +69,7 @@ const SingleRoom: React.FunctionComponent<SingleRoomProps> = ({ roomName, roomId
       }}
     >
       {data.room.roomPic ? <RoomImage source={{ uri: data.room.roomPic }} /> : <BlankRoomImage />}
-      <RoomInnerWrapper>
+      <View>
         <RoomNameHourWrapper>
           <RoomName>{roomName}</RoomName>
         </RoomNameHourWrapper>
@@ -77,7 +77,7 @@ const SingleRoom: React.FunctionComponent<SingleRoomProps> = ({ roomName, roomId
         <TextBy>
           Last message {lastMessage.insertedAt} by {lastMessage.user.firstName}
         </TextBy>
-      </RoomInnerWrapper>
+      </View>
     </SingleRoomContainer>
   );
 };

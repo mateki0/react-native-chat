@@ -17,6 +17,7 @@ type ChatHeaderProps = {
 
 const ChatHeader: React.FunctionComponent<ChatHeaderProps> = ({ roomName }) => {
   const navigation = useNavigation();
+
   return (
     <HeaderContainer>
       <NavButtonsWrapper>

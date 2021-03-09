@@ -1,7 +1,7 @@
 import styled from 'styled-components/native';
 
 const RoomsList = styled.FlatList`
-  margin-top: 70px;
+  margin-top: 40px;
 `;
 
 export default RoomsList;
