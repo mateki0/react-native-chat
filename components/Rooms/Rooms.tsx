@@ -7,7 +7,7 @@ import RoomsContainer from './styled/RoomsContainer';
 import SingleRoom from './SingleRoom';
 import RoomsList from './styled/RoomsList';
 
-export type RoomProps = {
+type RoomProps = {
   item: {
     name: string;
     id: string;
