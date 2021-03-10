@@ -32,7 +32,7 @@ const Header: React.FunctionComponent<HeaderProps> = ({ isLogged }) => {
   const handleLogout = () => {
     handleRemoveToken().then(() => {
       client.resetStore();
-      handleUserChange({ id: '' });
+      handleUserChange({ token: '' });
     });
   };
   return (

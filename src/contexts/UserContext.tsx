@@ -2,21 +2,21 @@ import * as React from 'react';
 
 interface ContextProps {
   user: {
-    id?: string;
+    token?: string;
   };
-  handleUserChange: (e: { id: string }) => void;
+  handleUserChange: (e: { token: string }) => void;
 }
 
 export const UserContext = React.createContext<ContextProps>({
   user: {
-    id: '',
+    token: '',
   },
   handleUserChange: () => ({}),
 });
 
 export const UserProvider = ({ children }) => {
   const [user, setUser] = React.useState({});
-  const handleUserChange = (e: { id: string }) => {
+  const handleUserChange = (e: { token: string }) => {
     setUser(e);
   };
 

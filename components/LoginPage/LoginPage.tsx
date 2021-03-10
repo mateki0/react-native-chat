@@ -31,16 +31,16 @@ const LoginPage: React.FunctionComponent = () => {
 
   const [loginUserMutation] = useMutation(LOGIN_USER, {
     onCompleted: async ({ loginUser }) => {
-      navigation.navigate('Home');
-      await AsyncStorage.setItem('token', loginUser.token);
-      handleUserChange({ id: loginUser.user.id });
       setIsLoading(false);
+      handleUserChange({ token: loginUser.token });
+      await AsyncStorage.setItem('token', loginUser.token);
+      navigation.navigate('Home');
     },
   });
 
-  const handleLogin = ({ email, password }: FormData) => {
+  const handleLogin = async ({ email, password }: FormData) => {
     setIsLoading(true);
-    loginUserMutation({
+    await loginUserMutation({
       variables: { email, password },
     });
   };
@@ -51,7 +51,7 @@ const LoginPage: React.FunctionComponent = () => {
   }, [register]);
 
   if (isLoading) {
-    return <ActivityIndicator animating size="large" color="#5b61b9" />;
+    return <ActivityIndicator size="large" color="#5b61b9" />;
   }
 
   return (
