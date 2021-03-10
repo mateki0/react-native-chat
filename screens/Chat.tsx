@@ -6,6 +6,7 @@ import ChatHeader from '../components/Header/ChatHeader';
 import { SEND_MESSAGE } from '../src/utils/mutations';
 import ScreenWrapper from './styled/ScreenWrapper';
 import { ChatScreenRouteProp, RoomDetails, MessageProps } from '../src/types/ChatScreenTypes';
+import GiftedChatWrapper from './styled/GiftedChatWrapper';
 
 const Chat: React.FunctionComponent<ChatScreenRouteProp> = ({ route }) => {
   const [sendMessage] = useMutation(SEND_MESSAGE);
@@ -43,13 +44,15 @@ const Chat: React.FunctionComponent<ChatScreenRouteProp> = ({ route }) => {
   return (
     <ScreenWrapper>
       <ChatHeader roomName={roomName} />
-      <GiftedChat
-        messages={messages}
-        onSend={handleSend}
-        user={{ _id: 999 }}
-        placeholder="Type a message..."
-        alwaysShowSend
-      />
+      <GiftedChatWrapper>
+        <GiftedChat
+          messages={messages}
+          onSend={handleSend}
+          user={{ _id: 999 }}
+          placeholder="Type a message..."
+          alwaysShowSend
+        />
+      </GiftedChatWrapper>
     </ScreenWrapper>
   );
 };
