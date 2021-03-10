@@ -1,7 +1,6 @@
 import { createHttpLink, split, ApolloClient, InMemoryCache } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { TOKEN } from '@env';
 import * as AbsintheSocket from '@absinthe/socket';
 import { createAbsintheSocketLink } from '@absinthe/socket-apollo-link';
 import { hasSubscription } from '@jumpn/utils-graphql';
@@ -34,7 +33,7 @@ const initApollo = () => {
     return {
       headers: {
         ...headers,
-        Authorization: token ? `Bearer ${token}` : `Bearer ${TOKEN}`,
+        Authorization: token ? `Bearer ${token}` : ``,
       },
     };
   });
