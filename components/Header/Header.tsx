@@ -35,6 +35,7 @@ const Header: React.FunctionComponent<HeaderProps> = ({ isLogged }) => {
       handleUserChange({ token: '' });
     });
   };
+
   return (
     <HeaderContainer>
       <HeadingButtonsTextWrapper>
