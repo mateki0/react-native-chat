@@ -13,5 +13,6 @@ expo start in main folder
 ## Planned improvements
 
 - Tests
+- Rooms list in header
 - Typing User Subscription
 - Error Handling
