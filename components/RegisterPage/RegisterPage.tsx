@@ -29,15 +29,7 @@ const RegisterPage: React.FunctionComponent = () => {
 
   const EMAIL_REGEX = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-  const { control, errors, register, handleSubmit, watch } = useForm<RegisterFormData>();
-
-  React.useEffect(() => {
-    register('email');
-    register('firstName');
-    register('lastName');
-    register('password');
-    register('passwordConfirmation');
-  }, [register]);
+  const { control, errors, handleSubmit, watch } = useForm<RegisterFormData>();
 
   const handleRegister = ({
     email,
@@ -87,7 +79,6 @@ const RegisterPage: React.FunctionComponent = () => {
         )}
         name="firstName"
         rules={{ required: true }}
-        defaultValue=""
       />
 
       {errors.firstName && <ErrorText>First name is required</ErrorText>}
