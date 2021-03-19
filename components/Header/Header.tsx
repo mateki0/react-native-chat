@@ -16,8 +16,9 @@ import { UserContext } from '../../src/contexts/UserContext';
 type HeaderProps = {
   isLogged?: boolean;
 };
+
 const Header: React.FunctionComponent<HeaderProps> = ({ isLogged }) => {
-  const { handleUserChange } = React.useContext(UserContext);
+  const { handleTokenSave } = React.useContext(UserContext);
   const navigation = useNavigation();
   const client = useApolloClient();
 
@@ -32,7 +33,7 @@ const Header: React.FunctionComponent<HeaderProps> = ({ isLogged }) => {
   const handleLogout = () => {
     handleRemoveToken().then(() => {
       client.resetStore();
-      handleUserChange({ token: '' });
+      handleTokenSave({ newToken: '' });
     });
   };
 

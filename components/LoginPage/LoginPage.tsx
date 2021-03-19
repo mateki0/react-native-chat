@@ -20,37 +20,36 @@ type FormData = {
   password: string;
 };
 
+type LoginUserTypes = {
+  loginUser: {
+    token: string;
+    user: {
+      id: string;
+      firstName: string;
+    };
+  };
+};
+
 const LoginPage: React.FunctionComponent = () => {
-  const { control, handleSubmit, register, errors } = useForm<FormData>();
-  const { handleUserChange } = React.useContext(UserContext);
-  const [isLoading, setIsLoading] = React.useState(false);
+  const { control, handleSubmit, errors } = useForm<FormData>();
+  const { handleUserDataChange } = React.useContext(UserContext);
 
   const EMAIL_REGEX = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-  const navigation = useNavigation();
-
-  const [loginUserMutation] = useMutation(LOGIN_USER, {
-    onCompleted: async ({ loginUser }) => {
-      setIsLoading(false);
-      handleUserChange({ token: loginUser.token });
+  const [loginUserMutation, { loading }] = useMutation(LOGIN_USER, {
+    onCompleted: async ({ loginUser }: LoginUserTypes) => {
+      handleUserDataChange(loginUser.user);
       await AsyncStorage.setItem('token', loginUser.token);
-      navigation.navigate('Home');
     },
   });
 
   const handleLogin = async ({ email, password }: FormData) => {
-    setIsLoading(true);
     await loginUserMutation({
       variables: { email, password },
     });
   };
 
-  React.useEffect(() => {
-    register('email');
-    register('password');
-  }, [register]);
-
-  if (isLoading) {
+  if (loading) {
     return <ActivityIndicator size="large" color="#5b61b9" />;
   }
 

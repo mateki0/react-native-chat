@@ -4,13 +4,18 @@ import * as React from 'react';
 import { GiftedChat } from 'react-native-gifted-chat';
 import ChatHeader from '../components/Header/ChatHeader';
 import { SEND_MESSAGE } from '../src/utils/mutations';
-import ScreenWrapper from './styled/ScreenWrapper';
 import { ChatScreenRouteProp, RoomDetails, MessageProps } from '../src/types/ChatScreenTypes';
-import GiftedChatWrapper from './styled/GiftedChatWrapper';
+import { UserContext } from '../src/contexts/UserContext';
+import ScreenWrapper from '../components/ScreenWrapper/ScreenWrapper';
+import GiftedChatWrapper from '../components/ChatWrapper/GiftedChatWrapper';
 
 const Chat: React.FunctionComponent<ChatScreenRouteProp> = ({ route }) => {
   const [sendMessage] = useMutation(SEND_MESSAGE);
   const { roomName, roomId }: RoomDetails = route.params;
+
+  const userData = React.useContext(UserContext);
+
+  const userId = userData.user.id ? parseInt(userData.user.id, 10) : '';
 
   const giftedChatMessagesFormat = route.params.messages.map(
     ({ id, body, insertedAt, user }: MessageProps) => {
@@ -30,16 +35,17 @@ const Chat: React.FunctionComponent<ChatScreenRouteProp> = ({ route }) => {
 
   const [messages, setMessages] = React.useState(giftedChatMessagesFormat);
 
-  const handleSend = React.useCallback((msgs = []) => {
-    setMessages((previousMessages) => GiftedChat.append(previousMessages, msgs));
+  const handleSend = React.useCallback(
+    (msgs = []) => {
+      setMessages((previousMessages) => GiftedChat.append(previousMessages, msgs));
 
-    const body = msgs[0].text;
-    sendMessage({
-      variables: { body, roomId },
-    });
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+      const body = msgs[0].text;
+      sendMessage({
+        variables: { body, roomId },
+      });
+    },
+    [sendMessage, roomId],
+  );
 
   return (
     <ScreenWrapper>
@@ -48,7 +54,7 @@ const Chat: React.FunctionComponent<ChatScreenRouteProp> = ({ route }) => {
         <GiftedChat
           messages={messages}
           onSend={handleSend}
-          user={{ _id: 999 }}
+          user={{ _id: userId }}
           placeholder="Type a message..."
           alwaysShowSend
         />

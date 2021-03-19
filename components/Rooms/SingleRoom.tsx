@@ -3,7 +3,6 @@ import * as React from 'react';
 import { useQuery } from '@apollo/client';
 import { ActivityIndicator, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import moment from 'moment';
 import RoomName from './styled/RoomName';
 import SingleRoomContainer from './styled/SingleRoomContainer';
 import { GET_SINGLE_ROOM } from '../../src/utils/queries';
@@ -25,7 +24,7 @@ const SingleRoom: React.FunctionComponent<SingleRoomProps> = ({ roomName, roomId
   });
 
   React.useEffect(() => {
-    if (!loading) {
+    if (!data) {
       subscribeToMore({
         document: MESSAGES_SUBSCRIPTION,
         variables: { roomId },
@@ -41,23 +40,24 @@ const SingleRoom: React.FunctionComponent<SingleRoomProps> = ({ roomName, roomId
         },
       });
     }
-  }, [loading, roomId, subscribeToMore]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data, roomId]);
 
   const navigation = useNavigation();
-
-  if (loading) {
-    return <ActivityIndicator size="large" color="#5b61b9" />;
-  }
 
   const sortedMessages = data.room.messages
     .slice()
     .sort(
       (a, b) =>
-        moment(b.insertedAt, 'YYYY-MM-DD HH:mm:ss').unix() -
-        moment(a.insertedAt, 'YYYY-MM-DD HH:mm:ss').unix(),
+        Date.parse(b.insertedAt.replace(' ', 'T')) / 1000 -
+        Date.parse(a.insertedAt.replace(' ', 'T')) / 1000,
     );
 
   const lastMessage = sortedMessages[0];
+
+  if (loading) {
+    return <ActivityIndicator size="large" color="#5b61b9" />;
+  }
 
   return (
     <SingleRoomContainer
