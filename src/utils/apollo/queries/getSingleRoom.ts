@@ -1,17 +1,6 @@
 import { gql } from '@apollo/client';
 
-export const GET_ROOMS = gql`
-  {
-    usersRooms {
-      rooms {
-        id
-        name
-      }
-    }
-  }
-`;
-
-export const GET_SINGLE_ROOM = gql`
+const GET_SINGLE_ROOM = gql`
   query room($id: ID!) {
     room(id: $id) {
       id
@@ -33,3 +22,5 @@ export const GET_SINGLE_ROOM = gql`
     }
   }
 `;
+
+export default GET_SINGLE_ROOM;

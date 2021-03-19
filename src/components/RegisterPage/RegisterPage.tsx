@@ -5,12 +5,12 @@ import { useNavigation } from '@react-navigation/native';
 import { useForm, Controller } from 'react-hook-form';
 import { useMutation } from '@apollo/client';
 
-import { REGISTER_USER } from '../../src/utils/mutations';
 import FormWrapper from '../LoginPage/styled/FormWrapper';
 import FormHeading from '../LoginPage/styled/FormHeading';
 import FormInput from '../LoginPage/styled/FormInput';
 import ErrorText from '../LoginPage/styled/ErrorText';
 import FormSubmitButton from '../LoginPage/styled/FormSubmitButton';
+import REGISTER_USER from '../../utils/apollo/mutations/registerUser';
 
 type RegisterFormData = {
   email: string;

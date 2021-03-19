@@ -5,13 +5,13 @@ import { ActivityIndicator, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import RoomName from './styled/RoomName';
 import SingleRoomContainer from './styled/SingleRoomContainer';
-import { GET_SINGLE_ROOM } from '../../src/utils/queries';
 import RoomImage from './styled/RoomImage';
 import BlankRoomImage from './styled/BlankRoomImage';
 import RoomNameHourWrapper from './styled/RoomNameHourWrapper';
 import LastMessageText from './styled/LastMessageText';
 import TextBy from './styled/TextBy';
-import { MESSAGES_SUBSCRIPTION } from '../../src/utils/subscriptions';
+import GET_SINGLE_ROOM from '../../utils/apollo/queries/getSingleRoom';
+import MESSAGES_SUBSCRIPTION from '../../utils/apollo/subscriptions/messagesSubscription';
 
 type SingleRoomProps = {
   roomName: string;
@@ -40,8 +40,7 @@ const SingleRoom: React.FunctionComponent<SingleRoomProps> = ({ roomName, roomId
         },
       });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data, roomId]);
+  }, [data, roomId, subscribeToMore]);
 
   const navigation = useNavigation();
 

@@ -11,7 +11,7 @@ import HeaderText from './styled/HeaderText';
 import CircleButton from './styled/CircleButton';
 import HeadingButtonsTextWrapper from './styled/HeadingButtonsTextWrapper';
 import LoginRegisterWrapper from './styled/LoginRegisterWrapper';
-import { UserContext } from '../../src/contexts/UserContext';
+import { UserContext } from '../../contexts/UserContext';
 
 type HeaderProps = {
   isLogged?: boolean;

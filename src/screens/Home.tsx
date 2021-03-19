@@ -4,7 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Header from '../components/Header/Header';
 import Rooms from '../components/Rooms/Rooms';
 import LoginPage from '../components/LoginPage/LoginPage';
-import { UserContext } from '../src/contexts/UserContext';
+import { UserContext } from '../contexts/UserContext';
 import ScreenWrapper from '../components/ScreenWrapper/ScreenWrapper';
 
 const Home: React.FunctionComponent = () => {

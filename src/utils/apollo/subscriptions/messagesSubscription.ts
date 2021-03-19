@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client';
 
-export const MESSAGES_SUBSCRIPTION = gql`
+const MESSAGES_SUBSCRIPTION = gql`
   subscription($roomId: String!) {
     messageAdded(roomId: $roomId) {
       id
@@ -13,3 +13,5 @@ export const MESSAGES_SUBSCRIPTION = gql`
     }
   }
 `;
+
+export default MESSAGES_SUBSCRIPTION;

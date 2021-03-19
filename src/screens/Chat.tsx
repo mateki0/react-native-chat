@@ -3,11 +3,11 @@ import * as React from 'react';
 
 import { GiftedChat } from 'react-native-gifted-chat';
 import ChatHeader from '../components/Header/ChatHeader';
-import { SEND_MESSAGE } from '../src/utils/mutations';
-import { ChatScreenRouteProp, RoomDetails, MessageProps } from '../src/types/ChatScreenTypes';
-import { UserContext } from '../src/contexts/UserContext';
+import { ChatScreenRouteProp, RoomDetails, MessageProps } from '../types/ChatScreenTypes';
+import { UserContext } from '../contexts/UserContext';
 import ScreenWrapper from '../components/ScreenWrapper/ScreenWrapper';
 import GiftedChatWrapper from '../components/ChatWrapper/GiftedChatWrapper';
+import SEND_MESSAGE from '../utils/apollo/mutations/sendMessage';
 
 const Chat: React.FunctionComponent<ChatScreenRouteProp> = ({ route }) => {
   const [sendMessage] = useMutation(SEND_MESSAGE);

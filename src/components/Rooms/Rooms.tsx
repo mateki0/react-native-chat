@@ -2,10 +2,10 @@ import * as React from 'react';
 
 import { ActivityIndicator } from 'react-native';
 import { useQuery } from '@apollo/client';
-import { GET_ROOMS } from '../../src/utils/queries';
 import RoomsContainer from './styled/RoomsContainer';
 import SingleRoom from './SingleRoom';
 import RoomsList from './styled/RoomsList';
+import GET_ROOMS from '../../utils/apollo/queries/getRooms';
 
 type RoomProps = {
   item: {

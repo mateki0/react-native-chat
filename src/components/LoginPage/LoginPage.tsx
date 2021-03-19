@@ -2,7 +2,6 @@ import * as React from 'react';
 
 import { Text, ActivityIndicator } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useNavigation } from '@react-navigation/native';
 import { useForm, Controller } from 'react-hook-form';
 import { useMutation } from '@apollo/client';
 
@@ -11,9 +10,8 @@ import FormInput from './styled/FormInput';
 import FormSubmitButton from './styled/FormSubmitButton';
 import FormWrapper from './styled/FormWrapper';
 import FormHeading from './styled/FormHeading';
-
-import { LOGIN_USER } from '../../src/utils/mutations';
-import { UserContext } from '../../src/contexts/UserContext';
+import { UserContext } from '../../contexts/UserContext';
+import LOGIN_USER from '../../utils/apollo/mutations/loginUser';
 
 type FormData = {
   email: string;

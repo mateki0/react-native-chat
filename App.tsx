@@ -3,12 +3,12 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { ApolloProvider } from '@apollo/client';
-import initApollo from './src/utils/initApollo';
-import Home from './screens/Home';
-import Chat from './screens/Chat';
-import Login from './screens/Login';
+import initApollo from './src/utils/apollo/initApollo';
+import Home from './src/screens/Home';
+import Chat from './src/screens/Chat';
+import Login from './src/screens/Login';
 import { UserProvider } from './src/contexts/UserContext';
-import Register from './screens/Register';
+import Register from './src/screens/Register';
 
 const Stack = createStackNavigator();
 const client = initApollo();
