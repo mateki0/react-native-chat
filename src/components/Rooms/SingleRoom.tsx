@@ -44,6 +44,10 @@ const SingleRoom: React.FunctionComponent<SingleRoomProps> = ({ roomName, roomId
 
   const navigation = useNavigation();
 
+  if (loading) {
+    return <ActivityIndicator size="large" color="#5b61b9" />;
+  }
+
   const sortedMessages = data.room.messages
     .slice()
     .sort(
@@ -53,10 +57,6 @@ const SingleRoom: React.FunctionComponent<SingleRoomProps> = ({ roomName, roomId
     );
 
   const lastMessage = sortedMessages[0];
-
-  if (loading) {
-    return <ActivityIndicator size="large" color="#5b61b9" />;
-  }
 
   return (
     <SingleRoomContainer
