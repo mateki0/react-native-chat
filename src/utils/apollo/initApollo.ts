@@ -8,10 +8,10 @@ import PhoenixSocket from './socket';
 
 const initApollo = () => {
   const httpLink = createHttpLink({
-    uri: 'https://chat.thewidlarzgroup.com/api/graphql',
+    uri: '',
   });
 
-  const wssUri = 'wss://chat.thewidlarzgroup.com/socket';
+  const wssUri = '';
 
   const phoenixSocket = new PhoenixSocket(wssUri, {
     params: async () => {
